@@ -26,26 +26,26 @@ const PreviewSummary: React.FC<PreviewSummaryProps> = ({
       <div className="bg-gray-50 p-4 rounded">
         <div className="flex justify-between mb-2">
           <span>Subtotal</span>
-          <span>{formatCurrency(subtotal, currency)}</span>
+          <span className="text-right break-words max-w-[150px]">{formatCurrency(subtotal, currency)}</span>
         </div>
         
         {taxRate > 0 && (
           <div className="flex justify-between mb-2">
             <span>Tax ({taxRate}%)</span>
-            <span>{formatCurrency(tax, currency)}</span>
+            <span className="text-right break-words max-w-[150px]">{formatCurrency(tax, currency)}</span>
           </div>
         )}
         
         {discountRate > 0 && (
           <div className="flex justify-between mb-2">
             <span>Discount ({discountRate}%)</span>
-            <span>-{formatCurrency(discount, currency)}</span>
+            <span className="text-right break-words max-w-[150px]">-{formatCurrency(discount, currency)}</span>
           </div>
         )}
         
         <div className="flex justify-between font-bold mt-3 pt-3 border-t border-gray-300">
           <span>Total</span>
-          <span className="text-invoice-primary">{formatCurrency(total, currency)}</span>
+          <span className="text-invoice-primary text-right break-words max-w-[150px]">{formatCurrency(total, currency)}</span>
         </div>
       </div>
     </div>

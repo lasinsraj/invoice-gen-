@@ -26,7 +26,7 @@ const PreviewLineItems: React.FC<PreviewLineItemsProps> = ({ items, currency }) 
               <td className="py-4 px-0">{item.description}</td>
               <td className="py-4 px-4 text-right">{item.quantity}</td>
               <td className="py-4 px-4 text-right">{formatCurrency(item.rate, currency)}</td>
-              <td className="py-4 px-0 text-right">{formatCurrency(item.amount, currency)}</td>
+              <td className="py-4 px-0 text-right break-words max-w-[150px]">{formatCurrency(item.amount, currency)}</td>
             </tr>
           ))}
         </tbody>

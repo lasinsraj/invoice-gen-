@@ -33,12 +33,14 @@ export const calculateTotal = (subtotal: number, tax: number, discount: number):
   return subtotal + tax - discount;
 };
 
-// Format currency
+// Format currency with proper handling for large numbers
 export const formatCurrency = (amount: number, currencyCode: string = "USD"): string => {
+  // Format with appropriate spacing for large numbers
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: currencyCode,
     minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   }).format(amount);
 };
 
@@ -51,6 +53,22 @@ export const formatDate = (dateString: string): string => {
     month: 'long',
     day: 'numeric',
   }).format(date);
+};
+
+// Helper function to truncate and format large numbers for PDF
+const formatLargeNumber = (num: number, currencyCode: string = "USD"): string => {
+  if (num >= 1000000) {
+    // For amounts ≥ 1 million, format as X.XX million
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: currencyCode,
+      maximumFractionDigits: 2,
+      notation: 'compact',
+      compactDisplay: 'short',
+    }).format(num);
+  } else {
+    return formatCurrency(num, currencyCode);
+  }
 };
 
 // Generate PDF
@@ -91,13 +109,14 @@ export const generatePDF = (invoice: InvoiceData): void => {
   doc.text(formatDate(invoice.issueDate), 60, 70);
   doc.text(formatDate(invoice.dueDate), 60, 75);
   
-  // Items table
+  // Items table with better formatting for large amounts
   const tableColumn = ["Description", "Quantity", "Rate", "Amount"];
   const tableRows = invoice.items.map(item => [
     item.description,
     item.quantity.toString(),
     formatCurrency(item.rate, invoice.currency),
-    formatCurrency(item.amount, invoice.currency),
+    // Format amount properly to prevent overflow
+    formatLargeNumber(item.amount, invoice.currency),
   ]);
   
   // @ts-ignore
@@ -108,14 +127,18 @@ export const generatePDF = (invoice: InvoiceData): void => {
     headStyles: {
       fillColor: [0, 102, 204],
     },
+    columnStyles: {
+      3: { halign: 'right' }, // Right align the Amount column
+    },
+    margin: { right: 10 }, // Add a bit more margin on the right
   });
   
   // Get the final y position after the table
   // @ts-ignore
   const finalY = doc.lastAutoTable.finalY + 10;
   
-  // Summary section
-  const summaryX = 140;
+  // Adjust summary section positioning to avoid overlap
+  const summaryX = 120; // Move left a bit to allow more space for numbers
   let currentY = finalY;
   
   doc.setTextColor(100, 100, 100);
@@ -135,25 +158,26 @@ export const generatePDF = (invoice: InvoiceData): void => {
   doc.setFontSize(12);
   doc.text("Total:", summaryX, currentY + 5);
   
-  // Values
+  // Right-aligned values with proper formatting for large numbers
   doc.setTextColor(0, 0, 0);
   doc.setFontSize(10);
-  doc.text(formatCurrency(invoice.subtotal, invoice.currency), 175, finalY, { align: "right" });
+  // Adjust right alignment position and use compact formatting for large numbers
+  doc.text(formatLargeNumber(invoice.subtotal, invoice.currency), 195, finalY, { align: "right" });
   
   currentY = finalY + 5;
   if (invoice.taxRate > 0) {
-    doc.text(formatCurrency(invoice.tax, invoice.currency), 175, currentY, { align: "right" });
+    doc.text(formatLargeNumber(invoice.tax, invoice.currency), 195, currentY, { align: "right" });
     currentY += 5;
   }
   
   if (invoice.discountRate > 0) {
-    doc.text(formatCurrency(invoice.discount, invoice.currency), 175, currentY, { align: "right" });
+    doc.text(formatLargeNumber(invoice.discount, invoice.currency), 195, currentY, { align: "right" });
     currentY += 5;
   }
   
   doc.setFontSize(12);
   doc.setTextColor(0, 102, 204);
-  doc.text(formatCurrency(invoice.total, invoice.currency), 175, currentY + 5, { align: "right" });
+  doc.text(formatLargeNumber(invoice.total, invoice.currency), 195, currentY + 5, { align: "right" });
   
   // Notes and terms
   if (invoice.notes) {
