@@ -18,10 +18,16 @@ import InvoiceSummary from './InvoiceSummary';
 
 interface InvoiceFormProps {
   onInvoiceUpdate: (invoice: InvoiceData) => void;
+  initialInvoice?: InvoiceData;
 }
 
-const InvoiceForm: React.FC<InvoiceFormProps> = ({ onInvoiceUpdate }) => {
-  const [invoice, setInvoice] = useState<InvoiceData>(defaultInvoice);
+const InvoiceForm: React.FC<InvoiceFormProps> = ({ onInvoiceUpdate, initialInvoice = defaultInvoice }) => {
+  const [invoice, setInvoice] = useState<InvoiceData>(initialInvoice);
+
+  // Re-initialize form when initialInvoice changes
+  useEffect(() => {
+    setInvoice(initialInvoice);
+  }, [initialInvoice]);
 
   // Calculate totals whenever items or rates change
   useEffect(() => {

@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useToast } from '@/hooks/use-toast';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import InvoiceForm from '@/components/InvoiceForm';
+import InvoiceForm from '@/components/invoice/InvoiceForm';
 import InvoicePreview from '@/components/InvoicePreview';
 import AdBanner from '@/components/AdBanner';
 import { InvoiceData, defaultInvoice } from '@/types/invoice';
@@ -16,11 +16,22 @@ import { HourglassIcon, DownloadIcon } from 'lucide-react';
 import { generatePDF } from '@/utils/invoice-utils';
 
 const InvoiceBuilder: React.FC = () => {
-  const [invoice, setInvoice] = useState<InvoiceData>(defaultInvoice);
+  // Store invoice in state that persists across tab changes
+  const [invoice, setInvoice] = useState<InvoiceData>(() => {
+    // Try to restore from localStorage if available
+    const savedInvoice = localStorage.getItem('invoiceData');
+    return savedInvoice ? JSON.parse(savedInvoice) : defaultInvoice;
+  });
+  
   const [activeTab, setActiveTab] = useState<string>('edit');
   const [selectedTemplate, setSelectedTemplate] = useState<'classic' | 'modern' | 'minimal' | 'professional'>('classic');
   const [countdown, setCountdown] = useState<number | null>(null);
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
+  
+  // Save to localStorage whenever invoice changes
+  useEffect(() => {
+    localStorage.setItem('invoiceData', JSON.stringify(invoice));
+  }, [invoice]);
   
   // Function to handle invoice updates from the form
   const handleInvoiceUpdate = (updatedInvoice: InvoiceData) => {
@@ -72,6 +83,11 @@ const InvoiceBuilder: React.FC = () => {
     setIsDownloading(true);
     setCountdown(5);
   };
+
+  // Handle tab change while preserving data
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+  };
   
   return (
     <div className="min-h-screen flex flex-col">
@@ -113,7 +129,7 @@ const InvoiceBuilder: React.FC = () => {
             </div>
           </div>
           
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
             <TabsList className="w-full mb-6">
               <TabsTrigger value="edit" className="flex-1">Edit Invoice</TabsTrigger>
               <TabsTrigger value="preview" className="flex-1">Preview</TabsTrigger>
@@ -124,7 +140,7 @@ const InvoiceBuilder: React.FC = () => {
                 <AdBanner width="100%" height="90px" adSlot={1} />
               </div>
               
-              <InvoiceForm onInvoiceUpdate={handleInvoiceUpdate} />
+              <InvoiceForm onInvoiceUpdate={handleInvoiceUpdate} initialInvoice={invoice} />
               
               <div className="mt-6">
                 <AdBanner width="100%" height="250px" adSlot={2} />
