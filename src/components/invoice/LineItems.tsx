@@ -21,6 +21,15 @@ const LineItems: React.FC<LineItemsProps> = ({
   onSampleItemAdd, 
   onItemRemove 
 }) => {
+  // Handle number changes with proper parsing
+  const handleNumberChange = (id: string, field: keyof InvoiceItem, value: string) => {
+    const numValue = value === '' ? 0 : parseFloat(value);
+    // Only update if it's a valid number
+    if (!isNaN(numValue)) {
+      onItemChange(id, field, numValue);
+    }
+  };
+
   return (
     <Card>
       <CardContent className="p-6">
@@ -52,7 +61,7 @@ const LineItems: React.FC<LineItemsProps> = ({
                       type="number"
                       min="1"
                       value={item.quantity}
-                      onChange={(e) => onItemChange(item.id, 'quantity', parseFloat(e.target.value) || 0)}
+                      onChange={(e) => handleNumberChange(item.id, 'quantity', e.target.value)}
                       className="text-right"
                     />
                   </td>
@@ -62,7 +71,7 @@ const LineItems: React.FC<LineItemsProps> = ({
                       min="0"
                       step="0.01"
                       value={item.rate}
-                      onChange={(e) => onItemChange(item.id, 'rate', parseFloat(e.target.value) || 0)}
+                      onChange={(e) => handleNumberChange(item.id, 'rate', e.target.value)}
                       className="text-right"
                     />
                   </td>

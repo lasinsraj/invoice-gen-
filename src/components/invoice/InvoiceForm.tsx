@@ -91,6 +91,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onInvoiceUpdate, initialInvoi
           
           // Auto-calculate amount
           if (field === 'quantity' || field === 'rate') {
+            // Convert string values to numbers properly
             const quantity = field === 'quantity' ? Number(value) : item.quantity;
             const rate = field === 'rate' ? Number(value) : item.rate;
             updatedItem.amount = quantity * rate;

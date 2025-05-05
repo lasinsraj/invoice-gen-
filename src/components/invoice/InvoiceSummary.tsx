@@ -11,6 +11,14 @@ interface InvoiceSummaryProps {
 }
 
 const InvoiceSummary: React.FC<InvoiceSummaryProps> = ({ invoice, onFieldChange }) => {
+  // Handle number input changes
+  const handleNumberChange = (field: keyof InvoiceData, value: string) => {
+    const numValue = value === '' ? 0 : parseFloat(value);
+    if (!isNaN(numValue)) {
+      onFieldChange(field, numValue);
+    }
+  };
+
   return (
     <Card>
       <CardContent className="p-6">
@@ -65,7 +73,7 @@ const InvoiceSummary: React.FC<InvoiceSummaryProps> = ({ invoice, onFieldChange 
                   min="0"
                   max="100"
                   value={invoice.taxRate}
-                  onChange={(e) => onFieldChange('taxRate', parseFloat(e.target.value) || 0)}
+                  onChange={(e) => handleNumberChange('taxRate', e.target.value)}
                   className="w-24 text-right"
                 />
               </div>
@@ -78,7 +86,7 @@ const InvoiceSummary: React.FC<InvoiceSummaryProps> = ({ invoice, onFieldChange 
                   min="0"
                   max="100"
                   value={invoice.discountRate}
-                  onChange={(e) => onFieldChange('discountRate', parseFloat(e.target.value) || 0)}
+                  onChange={(e) => handleNumberChange('discountRate', e.target.value)}
                   className="w-24 text-right"
                 />
               </div>
