@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { InvoiceItem } from '@/types/invoice';
 import { Trash, Plus } from 'lucide-react';
-import { createEmptyItem } from '@/utils/invoice-utils';
 
 interface LineItemsProps {
   items: InvoiceItem[];
