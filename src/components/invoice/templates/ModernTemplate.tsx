@@ -3,6 +3,7 @@ import React from 'react';
 import { InvoiceData } from '@/types/invoice';
 import { formatDate, formatCurrency } from '@/utils/invoice-utils';
 import { useIsMobile } from '@/hooks/use-mobile';
+import PreviewLineItems from '@/components/invoice/PreviewLineItems';
 
 interface ModernTemplateProps {
   invoice: InvoiceData;
