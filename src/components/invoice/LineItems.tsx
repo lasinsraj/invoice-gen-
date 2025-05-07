@@ -23,8 +23,14 @@ const LineItems: React.FC<LineItemsProps> = ({
 }) => {
   // Handle number changes with proper parsing
   const handleNumberChange = (id: string, field: keyof InvoiceItem, value: string) => {
-    const numValue = value === '' ? 0 : parseFloat(value);
-    // Only update if it's a valid number
+    // Handle empty input
+    if (value === '') {
+      onItemChange(id, field, 0);
+      return;
+    }
+    
+    // Parse the number and validate
+    const numValue = parseFloat(value);
     if (!isNaN(numValue)) {
       onItemChange(id, field, numValue);
     }

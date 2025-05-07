@@ -15,23 +15,49 @@ import { toast } from 'sonner';
 import { HourglassIcon, DownloadIcon } from 'lucide-react';
 import { generatePDF } from '@/utils/invoice-utils';
 
+const STORAGE_KEY = 'invoiceBuilderData';
+
 const InvoiceBuilder: React.FC = () => {
-  // Store invoice in state that persists across tab changes
+  // Store invoice in state that persists across tab changes and page refreshes
   const [invoice, setInvoice] = useState<InvoiceData>(() => {
-    // Try to restore from localStorage if available
-    const savedInvoice = localStorage.getItem('invoiceData');
-    return savedInvoice ? JSON.parse(savedInvoice) : defaultInvoice;
+    try {
+      // Try to restore from localStorage if available
+      const savedInvoice = localStorage.getItem(STORAGE_KEY);
+      return savedInvoice ? JSON.parse(savedInvoice) : defaultInvoice;
+    } catch (error) {
+      console.error('Error loading saved invoice data:', error);
+      return defaultInvoice;
+    }
   });
   
   const [activeTab, setActiveTab] = useState<string>('edit');
-  const [selectedTemplate, setSelectedTemplate] = useState<'classic' | 'modern' | 'minimal' | 'professional'>('classic');
+  const [selectedTemplate, setSelectedTemplate] = useState<'classic' | 'modern' | 'minimal' | 'professional'>(() => {
+    try {
+      return (localStorage.getItem('selectedTemplate') as any) || 'classic';
+    } catch (error) {
+      return 'classic';
+    }
+  });
   const [countdown, setCountdown] = useState<number | null>(null);
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
   
   // Save to localStorage whenever invoice changes
   useEffect(() => {
-    localStorage.setItem('invoiceData', JSON.stringify(invoice));
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(invoice));
+    } catch (error) {
+      console.error('Error saving invoice data:', error);
+    }
   }, [invoice]);
+  
+  // Save template preference
+  useEffect(() => {
+    try {
+      localStorage.setItem('selectedTemplate', selectedTemplate);
+    } catch (error) {
+      console.error('Error saving template preference:', error);
+    }
+  }, [selectedTemplate]);
   
   // Function to handle invoice updates from the form
   const handleInvoiceUpdate = (updatedInvoice: InvoiceData) => {
