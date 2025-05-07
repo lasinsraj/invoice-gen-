@@ -3,6 +3,7 @@ import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
+import { Textarea } from '@/components/ui/textarea';
 import { InvoiceData } from '@/types/invoice';
 
 interface InvoiceSummaryProps {
@@ -13,10 +14,27 @@ interface InvoiceSummaryProps {
 const InvoiceSummary: React.FC<InvoiceSummaryProps> = ({ invoice, onFieldChange }) => {
   // Handle number input changes
   const handleNumberChange = (field: keyof InvoiceData, value: string) => {
-    const numValue = value === '' ? 0 : parseFloat(value);
-    if (!isNaN(numValue)) {
-      onFieldChange(field, numValue);
+    // Handle empty input
+    if (value === '') {
+      onFieldChange(field, 0);
+      return;
     }
+    
+    // Only accept valid decimal numbers with up to 2 decimal places
+    if (/^\d*\.?\d{0,2}$/.test(value)) {
+      const numValue = parseFloat(value);
+      if (!isNaN(numValue)) {
+        onFieldChange(field, numValue);
+      }
+    }
+  };
+
+  // Handle text input with validation
+  const handleTextChange = (field: keyof InvoiceData, value: string) => {
+    // Limit text length to prevent overflow
+    const maxLength = 1000;
+    const sanitizedValue = value.slice(0, maxLength);
+    onFieldChange(field, sanitizedValue);
   };
 
   return (
@@ -27,21 +45,23 @@ const InvoiceSummary: React.FC<InvoiceSummaryProps> = ({ invoice, onFieldChange 
             <div className="space-y-4">
               <div>
                 <Label htmlFor="notes">Notes</Label>
-                <Input
+                <Textarea
                   id="notes"
-                  value={invoice.notes}
-                  onChange={(e) => onFieldChange('notes', e.target.value)}
+                  value={invoice.notes || ''}
+                  onChange={(e) => handleTextChange('notes', e.target.value)}
                   placeholder="Notes - any relevant information not already covered"
+                  className="min-h-[100px]"
                 />
               </div>
               
               <div>
                 <Label htmlFor="terms">Terms and Conditions</Label>
-                <Input
+                <Textarea
                   id="terms"
-                  value={invoice.terms}
-                  onChange={(e) => onFieldChange('terms', e.target.value)}
+                  value={invoice.terms || ''}
+                  onChange={(e) => handleTextChange('terms', e.target.value)}
                   placeholder="Terms and conditions"
+                  className="min-h-[100px]"
                 />
               </div>
             </div>
@@ -69,12 +89,15 @@ const InvoiceSummary: React.FC<InvoiceSummaryProps> = ({ invoice, onFieldChange 
                 <Label htmlFor="taxRate">Tax Rate (%)</Label>
                 <Input
                   id="taxRate"
-                  type="number"
+                  type="text"
+                  inputMode="decimal"
+                  pattern="[0-9]*\.?[0-9]{0,2}"
                   min="0"
                   max="100"
-                  value={invoice.taxRate}
+                  value={invoice.taxRate || ''}
                   onChange={(e) => handleNumberChange('taxRate', e.target.value)}
                   className="w-24 text-right"
+                  placeholder="0"
                 />
               </div>
               
@@ -82,12 +105,15 @@ const InvoiceSummary: React.FC<InvoiceSummaryProps> = ({ invoice, onFieldChange 
                 <Label htmlFor="discountRate">Discount (%)</Label>
                 <Input
                   id="discountRate"
-                  type="number"
+                  type="text"
+                  inputMode="decimal"
+                  pattern="[0-9]*\.?[0-9]{0,2}"
                   min="0"
                   max="100"
-                  value={invoice.discountRate}
+                  value={invoice.discountRate || ''}
                   onChange={(e) => handleNumberChange('discountRate', e.target.value)}
                   className="w-24 text-right"
+                  placeholder="0"
                 />
               </div>
               

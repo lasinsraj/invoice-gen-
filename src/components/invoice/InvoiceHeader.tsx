@@ -28,6 +28,13 @@ const InvoiceHeader: React.FC<InvoiceHeaderProps> = ({ invoice, onFieldChange })
     });
   };
 
+  const handleTextChange = (field: keyof InvoiceData, value: string) => {
+    // Limit text length to prevent overflow
+    const maxLength = 255;
+    const sanitizedValue = value.slice(0, maxLength);
+    onFieldChange(field, sanitizedValue);
+  };
+
   return (
     <Card>
       <CardContent className="p-6">
@@ -37,8 +44,8 @@ const InvoiceHeader: React.FC<InvoiceHeaderProps> = ({ invoice, onFieldChange })
             <div className="flex gap-2">
               <Input
                 id="invoiceNumber"
-                value={invoice.invoiceNumber}
-                onChange={(e) => onFieldChange('invoiceNumber', e.target.value)}
+                value={invoice.invoiceNumber || ''}
+                onChange={(e) => handleTextChange('invoiceNumber', e.target.value)}
                 placeholder="INV-0001"
                 className="flex-1"
               />
@@ -54,7 +61,7 @@ const InvoiceHeader: React.FC<InvoiceHeaderProps> = ({ invoice, onFieldChange })
               <Input
                 id="issueDate"
                 type="date"
-                value={invoice.issueDate}
+                value={invoice.issueDate || ''}
                 onChange={(e) => onFieldChange('issueDate', e.target.value)}
               />
             </div>
@@ -63,7 +70,7 @@ const InvoiceHeader: React.FC<InvoiceHeaderProps> = ({ invoice, onFieldChange })
               <Input
                 id="dueDate"
                 type="date"
-                value={invoice.dueDate}
+                value={invoice.dueDate || ''}
                 onChange={(e) => onFieldChange('dueDate', e.target.value)}
               />
             </div>

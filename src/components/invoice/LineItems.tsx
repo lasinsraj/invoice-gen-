@@ -29,11 +29,21 @@ const LineItems: React.FC<LineItemsProps> = ({
       return;
     }
     
-    // Parse the number and validate
-    const numValue = parseFloat(value);
-    if (!isNaN(numValue)) {
-      onItemChange(id, field, numValue);
+    // Parse the number and validate - only accepts numbers with up to 2 decimal places
+    if (/^\d*\.?\d{0,2}$/.test(value)) {
+      const numValue = parseFloat(value);
+      if (!isNaN(numValue)) {
+        onItemChange(id, field, numValue);
+      }
     }
+  };
+
+  // Handle text input with validation
+  const handleTextChange = (id: string, field: keyof InvoiceItem, value: string) => {
+    // Limit text length to prevent overflow
+    const maxLength = 255;
+    const sanitizedValue = value.slice(0, maxLength);
+    onItemChange(id, field, sanitizedValue);
   };
 
   return (
@@ -58,33 +68,36 @@ const LineItems: React.FC<LineItemsProps> = ({
                   <td className="py-2 px-2">
                     <Input
                       value={item.description}
-                      onChange={(e) => onItemChange(item.id, 'description', e.target.value)}
+                      onChange={(e) => handleTextChange(item.id, 'description', e.target.value)}
                       placeholder="Item description"
                     />
                   </td>
                   <td className="py-2 px-2">
                     <Input
-                      type="number"
-                      min="1"
-                      value={item.quantity}
+                      type="text"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      value={item.quantity || ''}
                       onChange={(e) => handleNumberChange(item.id, 'quantity', e.target.value)}
                       className="text-right"
+                      placeholder="0"
                     />
                   </td>
                   <td className="py-2 px-2">
                     <Input
-                      type="number"
-                      min="0"
-                      step="0.01"
-                      value={item.rate}
+                      type="text"
+                      inputMode="decimal"
+                      pattern="[0-9]*\.?[0-9]{0,2}"
+                      value={item.rate || ''}
                       onChange={(e) => handleNumberChange(item.id, 'rate', e.target.value)}
                       className="text-right"
+                      placeholder="0.00"
                     />
                   </td>
                   <td className="py-2 px-2">
                     <Input
                       readOnly
-                      value={item.amount.toFixed(2)}
+                      value={typeof item.amount === 'number' ? item.amount.toFixed(2) : '0.00'}
                       className="text-right bg-gray-50"
                     />
                   </td>
