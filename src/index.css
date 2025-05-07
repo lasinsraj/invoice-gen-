@@ -115,6 +115,34 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+@media (max-width: 768px) {
+  .invoice-preview {
+    padding: 20px;
+  }
+}
+
 .line-item:nth-child(even) {
   background-color: #f8f9fa;
+}
+
+/* Mobile-specific styling */
+@media (max-width: 768px) {
+  .break-words {
+    word-break: break-word;
+    max-width: 100%;
+    display: inline-block;
+  }
+  
+  .overflow-x-auto::-webkit-scrollbar {
+    height: 3px;
+  }
+  
+  .overflow-x-auto::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+  }
+  
+  .overflow-x-auto::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+  }
 }

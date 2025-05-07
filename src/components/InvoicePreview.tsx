@@ -1,15 +1,11 @@
 
 import React from 'react';
 import { InvoiceData } from '@/types/invoice';
-import PreviewHeader from '@/components/invoice/PreviewHeader';
-import PreviewAddress from '@/components/invoice/PreviewAddress';
-import PreviewLineItems from '@/components/invoice/PreviewLineItems';
-import PreviewNotes from '@/components/invoice/PreviewNotes';
-import PreviewSummary from '@/components/invoice/PreviewSummary';
 import ClassicTemplate from '@/components/invoice/templates/ClassicTemplate';
 import ModernTemplate from '@/components/invoice/templates/ModernTemplate';
 import MinimalTemplate from '@/components/invoice/templates/MinimalTemplate';
 import ProfessionalTemplate from '@/components/invoice/templates/ProfessionalTemplate';
+import PreviewLineItems from '@/components/invoice/PreviewLineItems';
 
 interface InvoicePreviewProps {
   invoice: InvoiceData;

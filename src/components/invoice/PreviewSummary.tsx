@@ -22,8 +22,8 @@ const PreviewSummary: React.FC<PreviewSummaryProps> = ({
   currency
 }) => {
   return (
-    <div className="md:w-1/3">
-      <div className="bg-gray-50 p-4 rounded">
+    <div className="w-full md:w-1/3">
+      <div className="bg-gray-50 p-4 rounded shadow-sm">
         <div className="flex justify-between mb-2">
           <span>Subtotal</span>
           <span className="text-right break-words max-w-[150px]">{formatCurrency(subtotal, currency)}</span>

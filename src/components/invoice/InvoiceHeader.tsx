@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { InvoiceData } from '@/types/invoice';
 import { toast } from '@/hooks/use-toast';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface InvoiceHeaderProps {
   invoice: InvoiceData;
@@ -13,6 +14,8 @@ interface InvoiceHeaderProps {
 }
 
 const InvoiceHeader: React.FC<InvoiceHeaderProps> = ({ invoice, onFieldChange }) => {
+  const isMobile = useIsMobile();
+  
   const generateInvoiceNumber = () => {
     const prefix = 'INV';
     const randomNum = Math.floor(10000 + Math.random() * 90000);
@@ -55,7 +58,7 @@ const InvoiceHeader: React.FC<InvoiceHeaderProps> = ({ invoice, onFieldChange })
             </div>
           </div>
           
-          <div className="grid grid-cols-2 gap-4">
+          <div className={isMobile ? "grid grid-cols-1 gap-4" : "grid grid-cols-2 gap-4"}>
             <div>
               <Label htmlFor="issueDate">Issue Date</Label>
               <Input

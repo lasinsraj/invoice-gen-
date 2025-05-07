@@ -6,21 +6,24 @@ import PreviewAddress from '@/components/invoice/PreviewAddress';
 import PreviewLineItems from '@/components/invoice/PreviewLineItems';
 import PreviewNotes from '@/components/invoice/PreviewNotes';
 import PreviewSummary from '@/components/invoice/PreviewSummary';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ClassicTemplateProps {
   invoice: InvoiceData;
 }
 
 const ClassicTemplate: React.FC<ClassicTemplateProps> = ({ invoice }) => {
+  const isMobile = useIsMobile();
+  
   return (
-    <div className="invoice-preview max-w-4xl mx-auto bg-white shadow-lg p-8 rounded print-only">
+    <div className="invoice-preview max-w-4xl mx-auto bg-white shadow-lg p-4 md:p-8 rounded print-only">
       <PreviewHeader
         invoiceNumber={invoice.invoiceNumber}
         issueDate={invoice.issueDate}
         dueDate={invoice.dueDate}
       />
       
-      <div className="flex flex-col md:flex-row justify-between mb-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-8 md:mb-12">
         <PreviewAddress
           title="From"
           addressData={invoice.billFrom}
@@ -37,11 +40,13 @@ const ClassicTemplate: React.FC<ClassicTemplateProps> = ({ invoice }) => {
         currency={invoice.currency}
       />
       
-      <div className="flex flex-col md:flex-row justify-between">
-        <PreviewNotes
-          notes={invoice.notes}
-          terms={invoice.terms}
-        />
+      <div className="flex flex-col md:flex-row justify-between gap-6">
+        <div className={isMobile ? "w-full" : "md:w-1/2"}>
+          <PreviewNotes
+            notes={invoice.notes}
+            terms={invoice.terms}
+          />
+        </div>
         
         <PreviewSummary
           subtotal={invoice.subtotal}
