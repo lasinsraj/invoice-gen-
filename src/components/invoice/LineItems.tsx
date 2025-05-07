@@ -107,6 +107,7 @@ const LineItems: React.FC<LineItemsProps> = ({
                       size="icon" 
                       onClick={() => onItemRemove(item.id)}
                       disabled={items.length <= 1}
+                      type="button"
                     >
                       <Trash className="h-4 w-4" />
                     </Button>

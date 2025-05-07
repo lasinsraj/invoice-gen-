@@ -68,10 +68,14 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onInvoiceUpdate, initialInvoi
 
   // Add a new item
   const handleAddItem = () => {
+    const newItem = createEmptyItem();
     setInvoice(prev => ({
       ...prev,
-      items: [...prev.items, createEmptyItem()]
+      items: [...prev.items, newItem]
     }));
+    
+    // For debugging
+    console.log('Added new item:', newItem);
   };
 
   // Remove an item
@@ -120,6 +124,9 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onInvoiceUpdate, initialInvoi
       ...prev,
       items: [...prev.items, sampleItem]
     }));
+    
+    // For debugging
+    console.log('Added sample item:', sampleItem);
   };
 
   // Initialize with an empty row if there are no items
