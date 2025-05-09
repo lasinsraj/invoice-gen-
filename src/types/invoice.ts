@@ -56,7 +56,7 @@ export const defaultInvoice: InvoiceData = {
   terms: "Payment is due within 30 days",
   taxRate: 0,
   discountRate: 0,
-  currency: "USD",
+  currency: "USD", // Default currency
   subtotal: 0,
   tax: 0,
   discount: 0,

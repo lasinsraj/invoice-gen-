@@ -1,4 +1,3 @@
-
 import { InvoiceData, InvoiceItem } from "@/types/invoice";
 import { v4 as uuidv4 } from "uuid";
 import { jsPDF } from "jspdf";
@@ -33,16 +32,19 @@ export const calculateTotal = (subtotal: number, tax: number, discount: number):
   return subtotal + tax - discount;
 };
 
-// Format currency with proper handling for large numbers
-export const formatCurrency = (amount: number, currencyCode: string = "USD"): string => {
-  // Format with appropriate spacing for large numbers
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: currencyCode,
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(amount);
-};
+// Format currency based on currency code
+export function formatCurrency(amount: number, currencyCode: string = 'USD'): string {
+  try {
+    return new Intl.NumberFormat('en-US', { 
+      style: 'currency', 
+      currency: currencyCode,
+      maximumFractionDigits: 2 
+    }).format(amount);
+  } catch (error) {
+    console.error(`Error formatting currency: ${error}`);
+    return `${currencyCode} ${amount.toFixed(2)}`;
+  }
+}
 
 // Format date
 export const formatDate = (dateString: string): string => {

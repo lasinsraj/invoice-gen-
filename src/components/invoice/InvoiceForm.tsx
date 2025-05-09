@@ -45,7 +45,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onInvoiceUpdate, initialInvoi
     }));
   }, [invoice.items, invoice.taxRate, invoice.discountRate]);
 
-  // Pass updated invoice to parent component - FIX: Added dependency array to prevent infinite loop
+  // Pass updated invoice to parent component
   useEffect(() => {
     onInvoiceUpdate(invoice);
   }, [invoice, onInvoiceUpdate]);

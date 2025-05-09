@@ -5,6 +5,8 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { InvoiceData } from '@/types/invoice';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { IndianRupee, CurrencyIcon } from 'lucide-react';
 
 interface InvoiceSummaryProps {
   invoice: InvoiceData;
@@ -36,6 +38,27 @@ const InvoiceSummary: React.FC<InvoiceSummaryProps> = ({ invoice, onFieldChange 
     const sanitizedValue = value.slice(0, maxLength);
     onFieldChange(field, sanitizedValue);
   };
+
+  // Currency options with symbols
+  const currencyOptions = [
+    { value: 'USD', label: 'USD ($)', symbol: '$' },
+    { value: 'EUR', label: 'EUR (€)', symbol: '€' },
+    { value: 'GBP', label: 'GBP (£)', symbol: '£' },
+    { value: 'INR', label: 'INR (₹)', symbol: '₹' },
+    { value: 'JPY', label: 'JPY (¥)', symbol: '¥' },
+    { value: 'CAD', label: 'CAD (C$)', symbol: 'C$' },
+    { value: 'AUD', label: 'AUD (A$)', symbol: 'A$' },
+    { value: 'SGD', label: 'SGD (S$)', symbol: 'S$' },
+    { value: 'CHF', label: 'CHF (Fr)', symbol: 'Fr' },
+    { value: 'MYR', label: 'MYR (RM)', symbol: 'RM' },
+    { value: 'CNY', label: 'CNY (¥)', symbol: '¥' },
+    { value: 'NZD', label: 'NZD (NZ$)', symbol: 'NZ$' },
+    { value: 'THB', label: 'THB (฿)', symbol: '฿' },
+    { value: 'LKR', label: 'LKR (Rs)', symbol: 'Rs' },
+    { value: 'ZAR', label: 'ZAR (R)', symbol: 'R' },
+    { value: 'RUB', label: 'RUB (₽)', symbol: '₽' },
+    { value: 'BRL', label: 'BRL (R$)', symbol: 'R$' },
+  ];
 
   return (
     <Card>
@@ -71,18 +94,28 @@ const InvoiceSummary: React.FC<InvoiceSummaryProps> = ({ invoice, onFieldChange 
             <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <Label>Currency</Label>
-                <select
+                <Select
                   value={invoice.currency}
-                  onChange={(e) => onFieldChange('currency', e.target.value)}
-                  className="border rounded p-2"
+                  onValueChange={(value) => onFieldChange('currency', value)}
                 >
-                  <option value="USD">USD ($)</option>
-                  <option value="EUR">EUR (€)</option>
-                  <option value="GBP">GBP (£)</option>
-                  <option value="INR">INR (₹)</option>
-                  <option value="JPY">JPY (¥)</option>
-                  <option value="CAD">CAD ($)</option>
-                </select>
+                  <SelectTrigger className="w-36">
+                    <SelectValue placeholder="Select Currency" />
+                  </SelectTrigger>
+                  <SelectContent className="max-h-60">
+                    {currencyOptions.map((currency) => (
+                      <SelectItem key={currency.value} value={currency.value}>
+                        <div className="flex items-center gap-2">
+                          {currency.value === 'INR' ? (
+                            <IndianRupee className="h-4 w-4" />
+                          ) : (
+                            <CurrencyIcon className="h-4 w-4" />
+                          )}
+                          <span>{currency.label}</span>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
               
               <div className="flex justify-between items-center">
