@@ -27,10 +27,10 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Resources</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-600 hover:text-invoice-primary">Invoicing Tips</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-invoice-primary">Templates</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-invoice-primary">Privacy Policy</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-invoice-primary">Terms of Service</a></li>
+              <li><Link to="/invoicing-tips" className="text-gray-600 hover:text-invoice-primary">Invoicing Tips</Link></li>
+              <li><Link to="/templates" className="text-gray-600 hover:text-invoice-primary">Templates</Link></li>
+              <li><Link to="/privacy-policy" className="text-gray-600 hover:text-invoice-primary">Privacy Policy</Link></li>
+              <li><Link to="/terms-of-service" className="text-gray-600 hover:text-invoice-primary">Terms of Service</Link></li>
             </ul>
           </div>
           
@@ -48,15 +48,15 @@ const Footer: React.FC = () => {
             &copy; {new Date().getFullYear()} Invoice Generator. All rights reserved.
           </p>
           <div className="flex space-x-4">
-            <a href="#" className="text-gray-600 hover:text-invoice-primary">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-invoice-primary">
               <span className="sr-only">Facebook</span>
               Facebook
             </a>
-            <a href="#" className="text-gray-600 hover:text-invoice-primary">
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-invoice-primary">
               <span className="sr-only">Twitter</span>
               Twitter
             </a>
-            <a href="#" className="text-gray-600 hover:text-invoice-primary">
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-invoice-primary">
               <span className="sr-only">LinkedIn</span>
               LinkedIn
             </a>
