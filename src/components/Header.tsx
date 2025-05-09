@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu } from 'lucide-react';
 import {
@@ -11,6 +11,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 const Header: React.FC = () => {
+  const navigate = useNavigate();
+  
   return (
     <header className="bg-white shadow-sm py-4 mb-8 sticky top-0 z-10 no-print">
       <div className="container mx-auto px-4 flex justify-between items-center">
@@ -33,7 +35,7 @@ const Header: React.FC = () => {
           <Link to="/contact" className="text-gray-700 hover:text-invoice-primary">
             Contact
           </Link>
-          <Button variant="default">Get Started</Button>
+          <Button variant="default" onClick={() => navigate('/invoice')}>Get Started</Button>
         </div>
         
         <div className="md:hidden">
@@ -45,16 +47,16 @@ const Header: React.FC = () => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem>
+              <DropdownMenuItem asChild>
                 <Link to="/" className="w-full">Home</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem asChild>
                 <Link to="/invoice" className="w-full">Create Invoice</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem asChild>
                 <Link to="/about" className="w-full">About</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem asChild>
                 <Link to="/contact" className="w-full">Contact</Link>
               </DropdownMenuItem>
             </DropdownMenuContent>

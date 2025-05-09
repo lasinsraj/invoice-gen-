@@ -1,9 +1,11 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 
 const Hero = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="bg-invoice-light py-16 px-4">
       <div className="container mx-auto max-w-6xl">
@@ -16,11 +18,18 @@ const Hero = () => {
               Free, professional invoice generator. No account required. Customize, download, and send your invoices instantly.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Button asChild size="lg">
-                <Link to="/invoice">Create Invoice Now</Link>
+              <Button 
+                size="lg"
+                onClick={() => navigate('/invoice')}
+              >
+                Create Invoice Now
               </Button>
-              <Button variant="outline" size="lg">
-                <Link to="/about">Learn More</Link>
+              <Button 
+                variant="outline" 
+                size="lg"
+                onClick={() => navigate('/about')}
+              >
+                Learn More
               </Button>
             </div>
           </div>
