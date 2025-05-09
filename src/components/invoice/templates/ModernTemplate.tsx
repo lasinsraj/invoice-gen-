@@ -30,19 +30,19 @@ const ModernTemplate: React.FC<ModernTemplateProps> = ({ invoice }) => {
       
       {/* Address Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 md:mb-12">
-        <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm">
+        <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm overflow-hidden">
           <h2 className="text-sm font-semibold uppercase text-blue-600 mb-3">From</h2>
           <p className="font-medium">{invoice.billFrom.name || "Your Business Name"}</p>
           <p className="text-gray-700 whitespace-pre-line break-words">{invoice.billFrom.address}</p>
-          {invoice.billFrom.email && <p className="text-gray-700 break-words">{invoice.billFrom.email}</p>}
+          {invoice.billFrom.email && <p className="text-gray-700 break-all">{invoice.billFrom.email}</p>}
           {invoice.billFrom.phone && <p className="text-gray-700">{invoice.billFrom.phone}</p>}
         </div>
         
-        <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm">
+        <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm overflow-hidden">
           <h2 className="text-sm font-semibold uppercase text-blue-600 mb-3">Bill To</h2>
           <p className="font-medium">{invoice.billTo.name || "Client Name"}</p>
           <p className="text-gray-700 whitespace-pre-line break-words">{invoice.billTo.address}</p>
-          {invoice.billTo.email && <p className="text-gray-700 break-words">{invoice.billTo.email}</p>}
+          {invoice.billTo.email && <p className="text-gray-700 break-all">{invoice.billTo.email}</p>}
           {invoice.billTo.phone && <p className="text-gray-700">{invoice.billTo.phone}</p>}
         </div>
       </div>

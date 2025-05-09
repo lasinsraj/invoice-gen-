@@ -24,15 +24,19 @@ const ClassicTemplate: React.FC<ClassicTemplateProps> = ({ invoice }) => {
       />
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-8 md:mb-12">
-        <PreviewAddress
-          title="From"
-          addressData={invoice.billFrom}
-        />
+        <div className="overflow-hidden">
+          <PreviewAddress
+            title="From"
+            addressData={invoice.billFrom}
+          />
+        </div>
         
-        <PreviewAddress
-          title="Bill To"
-          addressData={invoice.billTo}
-        />
+        <div className="overflow-hidden">
+          <PreviewAddress
+            title="Bill To"
+            addressData={invoice.billTo}
+          />
+        </div>
       </div>
       
       <PreviewLineItems

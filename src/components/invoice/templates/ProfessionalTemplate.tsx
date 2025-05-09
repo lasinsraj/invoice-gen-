@@ -31,19 +31,19 @@ const ProfessionalTemplate: React.FC<ProfessionalTemplateProps> = ({ invoice }) 
       {/* Address section */}
       <div className="p-4 md:p-8 bg-gray-50">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white p-4 md:p-6 rounded shadow-sm">
+          <div className="bg-white p-4 md:p-6 rounded shadow-sm overflow-hidden">
             <h2 className="text-sm font-semibold uppercase text-gray-500 mb-4 border-b pb-2">From</h2>
             <p className="font-medium text-base md:text-lg">{invoice.billFrom.name || "Your Business Name"}</p>
             <p className="text-gray-700 whitespace-pre-line mt-2 break-words">{invoice.billFrom.address}</p>
-            {invoice.billFrom.email && <p className="text-gray-700 mt-2 break-words">{invoice.billFrom.email}</p>}
+            {invoice.billFrom.email && <p className="text-gray-700 mt-2 break-all">{invoice.billFrom.email}</p>}
             {invoice.billFrom.phone && <p className="text-gray-700">{invoice.billFrom.phone}</p>}
           </div>
           
-          <div className="bg-white p-4 md:p-6 rounded shadow-sm">
+          <div className="bg-white p-4 md:p-6 rounded shadow-sm overflow-hidden">
             <h2 className="text-sm font-semibold uppercase text-gray-500 mb-4 border-b pb-2">Bill To</h2>
             <p className="font-medium text-base md:text-lg">{invoice.billTo.name || "Client Name"}</p>
             <p className="text-gray-700 whitespace-pre-line mt-2 break-words">{invoice.billTo.address}</p>
-            {invoice.billTo.email && <p className="text-gray-700 mt-2 break-words">{invoice.billTo.email}</p>}
+            {invoice.billTo.email && <p className="text-gray-700 mt-2 break-all">{invoice.billTo.email}</p>}
             {invoice.billTo.phone && <p className="text-gray-700">{invoice.billTo.phone}</p>}
           </div>
         </div>
