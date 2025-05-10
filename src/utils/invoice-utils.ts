@@ -1,3 +1,4 @@
+
 import { InvoiceData, InvoiceItem } from "@/types/invoice";
 import { v4 as uuidv4 } from "uuid";
 import { jsPDF } from "jspdf";
@@ -75,6 +76,7 @@ const formatLargeNumber = (num: number, currencyCode: string = "USD"): string =>
 
 // Generate PDF
 export const generatePDF = (invoice: InvoiceData): void => {
+  // Create a new jsPDF instance
   const doc = new jsPDF();
   
   // Add company info
