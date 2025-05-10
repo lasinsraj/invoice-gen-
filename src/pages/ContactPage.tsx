@@ -8,9 +8,11 @@ import { useToast } from '@/hooks/use-toast';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import AdBanner from '@/components/AdBanner';
+import { useNavigate } from 'react-router-dom';
 
 const ContactPage = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,6 +25,11 @@ const ContactPage = () => {
     
     // Reset form
     (e.target as HTMLFormElement).reset();
+  };
+  
+  const handleViewFAQs = () => {
+    // Navigate to FAQ page (we'll create this route in App.tsx)
+    navigate('/faqs');
   };
   
   return (
@@ -100,7 +107,7 @@ const ContactPage = () => {
                   <p className="text-gray-600 mb-4">
                     Before reaching out, you might find answers to common questions in our FAQ section.
                   </p>
-                  <Button variant="outline" className="w-full">View FAQs</Button>
+                  <Button variant="outline" className="w-full" onClick={handleViewFAQs}>View FAQs</Button>
                 </div>
               </div>
             </div>

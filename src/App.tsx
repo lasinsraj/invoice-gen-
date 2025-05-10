@@ -14,6 +14,7 @@ import InvoicingTips from "./pages/InvoicingTips";
 import Templates from "./pages/Templates";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
+import FAQsPage from "./pages/FAQsPage";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,7 @@ const App = () => (
             <Route path="/templates" element={<Templates />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/faqs" element={<FAQsPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
