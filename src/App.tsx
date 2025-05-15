@@ -16,6 +16,14 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import FAQsPage from "./pages/FAQsPage";
 
+// SEO Landing Pages
+import SmallBusinessInvoice from "./pages/seo/SmallBusinessInvoice";
+import FreelancerInvoiceTemplate from "./pages/seo/FreelancerInvoiceTemplate";
+import OnlineBillingSoftware from "./pages/seo/OnlineBillingSoftware";
+import InvoiceManagementSystem from "./pages/seo/InvoiceManagementSystem";
+import FreeInvoiceGenerator from "./pages/seo/FreeInvoiceGenerator";
+import InvoiceMaker from "./pages/seo/InvoiceMaker";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -35,6 +43,16 @@ const App = () => (
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/faqs" element={<FAQsPage />} />
+            
+            {/* SEO Landing Pages */}
+            <Route path="/small-business-invoice" element={<SmallBusinessInvoice />} />
+            <Route path="/freelancer-invoice-template" element={<FreelancerInvoiceTemplate />} />
+            <Route path="/online-billing-software" element={<OnlineBillingSoftware />} />
+            <Route path="/invoice-management-system" element={<InvoiceManagementSystem />} />
+            <Route path="/free-invoice-generator" element={<FreeInvoiceGenerator />} />
+            <Route path="/invoice-maker" element={<InvoiceMaker />} />
+            
+            {/* Redirect */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

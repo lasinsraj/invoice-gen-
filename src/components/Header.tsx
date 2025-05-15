@@ -8,6 +8,10 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
+  DropdownMenuGroup,
 } from '@/components/ui/dropdown-menu';
 
 const Header: React.FC = () => {
@@ -29,6 +33,36 @@ const Header: React.FC = () => {
           <Link to="/invoice" className="text-gray-700 hover:text-invoice-primary">
             Create Invoice
           </Link>
+          
+          {/* Solutions Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger className="text-gray-700 hover:text-invoice-primary focus:outline-none">
+              Solutions
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="center" className="w-56">
+              <DropdownMenuGroup>
+                <DropdownMenuItem asChild>
+                  <Link to="/free-invoice-generator" className="w-full">Free Invoice Generator</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/invoice-maker" className="w-full">Invoice Maker</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/small-business-invoice" className="w-full">Small Business Invoice</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/freelancer-invoice-template" className="w-full">Freelancer Invoice Template</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/online-billing-software" className="w-full">Online Billing Software</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/invoice-management-system" className="w-full">Invoice Management System</Link>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          
           <Link to="/about" className="text-gray-700 hover:text-invoice-primary">
             About
           </Link>
@@ -53,6 +87,25 @@ const Header: React.FC = () => {
               <DropdownMenuItem asChild>
                 <Link to="/invoice" className="w-full">Create Invoice</Link>
               </DropdownMenuItem>
+              
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>Solutions</DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem asChild>
+                    <Link to="/free-invoice-generator" className="w-full">Free Invoice Generator</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/invoice-maker" className="w-full">Invoice Maker</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/small-business-invoice" className="w-full">Small Business Invoice</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/freelancer-invoice-template" className="w-full">Freelancer Template</Link>
+                  </DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+              
               <DropdownMenuItem asChild>
                 <Link to="/about" className="w-full">About</Link>
               </DropdownMenuItem>

@@ -20,6 +20,14 @@ Crawl-delay: 1
 Allow: /*.json$
 Allow: /*.jsonld$
 
+# Allow access to all invoice templates and key pages
+Allow: /invoice
+Allow: /free-invoice-generator
+Allow: /invoice-maker
+Allow: /small-business-invoice
+Allow: /freelancer-invoice-template
+Allow: /online-billing-software
+Allow: /invoice-management-system
+
 # Allow access to creator info
 Allow: /about
-
